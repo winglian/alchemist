@@ -1,0 +1,44 @@
+<html>
+<head>
+</head>
+<body>
+<div>
+    <img id="demo_img" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=322×214&w=322&h=214" width="100%" data-bytes="0" />
+</div>
+</body>
+<script>
+    function ajaxImage(url, elm, startrange,endrange, img_buffer){
+        var xhr = new XMLHttpRequest(),
+                blob, objectURL, arrayBufferView;
+
+        xhr.open('GET', url, true);
+        xhr.responseType = 'arraybuffer';
+        xhr.setRequestHeader('Range', 'bytes=' + startrange + '-' + endrange);
+        xhr.addEventListener('load', function () {
+            if (xhr.status === 200 || xhr.status == 206) {
+                oldBufferView = img_buffer.data;
+                arrayBufferView = new Uint8Array(xhr.response);
+                img_buffer.data = new Uint8Array(oldBufferView.length + arrayBufferView.length);
+                img_buffer.data.set(oldBufferView, 0);
+                img_buffer.data.set(arrayBufferView, img_buffer.len);
+                img_buffer.len += arrayBufferView.length;
+                blob = new Blob([img_buffer.data], {'type': 'image\/jpeg'});
+                objectURL = window.URL.createObjectURL(blob);
+                elm.src = objectURL;
+            }
+        }, false);
+        xhr.send();
+    }
+
+    window.addEventListener('load', function () {
+        var img = {};
+        img.data = new Uint8Array();
+        img.len = 0;
+        ajaxImage('./img/demo.jpg', document.getElementById('demo_img'), 0, 100192, img);
+        setTimeout(function() {ajaxImage('./img/demo.jpg', document.getElementById('demo_img'), 100193, 196832, img)}, 5000);
+        setTimeout(function() {ajaxImage('./img/demo.jpg', document.getElementById('demo_img'), 196833, 429536, img)}, 10000);
+        setTimeout(function() {ajaxImage('./img/demo.jpg', document.getElementById('demo_img'), 429537, 738435, img)}, 15000);
+    }, false);
+
+</script>
+</html>
