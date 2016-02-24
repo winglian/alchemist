@@ -1,0 +1,24 @@
+{
+  "name": "alchemist",
+  "version": "1.0.0",
+  "description": "responsive img components with progressive jpegs",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winglian/alchemist.git"
+  },
+  "author": "wing.lian@gmail.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/winglian/alchemist/issues"
+  },
+  "homepage": "https://github.com/winglian/alchemist#readme",
+  "dependencies": {
+    "async": "^1.5.2",
+    "aws-sdk": "^2.2.38",
+    "gm": "^1.21.1"
+  }
+}
